@@ -1,5 +1,8 @@
 import java.util.HashMap;
+import java.util.InputMismatchException;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.Map.Entry;
@@ -10,22 +13,24 @@ public class OscarHospitalWorld {
         try (Scanner scanner = new Scanner(System.in)) {
 
             // Create Hospital
-            Hospital h1 = new Hospital(scanner.nextLine());
+            Hospital userHospital = new Hospital(scanner.nextLine());
 
             // Creating Doctors, make these inputs with a Scanner
-            Doctor d1 = new Doctor("Jose Andrade", "Pediatrics");
-            Doctor d3 = new Doctor("Bob Walters", "Orthopedics");
-            Doctor d2 = new Doctor("Alice Woods", "Dermatology");
-            Doctor d4 = new Doctor("Silvio Gonzales", "Orthopedics");
-            Doctor d5 = new Doctor("Gregory House", "Internal Medicine");
+            // Doctor d1 = new Doctor("Jose Andrade", "Pediatrics");
+            // Doctor d3 = new Doctor("Bob Walters", "Orthopedics");
+            // Doctor d2 = new Doctor("Alice Woods", "Dermatology");
+            // Doctor d4 = new Doctor("Silvio Gonzales", "Orthopedics");
+            // Doctor d5 = new Doctor("Gregory House", "Internal Medicine");
+
+            populateData(scanner, userHospital);
 
             // Doctors added to Hospital HashMap
             // Tracks Departments (keys) and their respective list of Doctors (values)
-            h1.addDoctorToList(d1);
-            h1.addDoctorToList(d2);
-            h1.addDoctorToList(d3);
-            h1.addDoctorToList(d4);
-            h1.addDoctorToList(d5);
+            // userHospital.addDoctorToList(d1);
+            // userHospital.addDoctorToList(d2);
+            // userHospital.addDoctorToList(d3);
+            // userHospital.addDoctorToList(d4);
+            // userHospital.addDoctorToList(d5);
 
             // Creating Patients and placing them in a Array for input purposes
             Patient p1 = new Patient("Carlos", 22, "Skin Rash");
@@ -39,10 +44,10 @@ public class OscarHospitalWorld {
             // Running "CheckIn" method that assigns patients to respective Department &
             // Doctor
             // Might need to decouple, and place in another class
-            refactoredpatientCheckIn(h1.getSpecialtyDirectory(), patientArray);
+            refactoredpatientCheckIn(userHospital.getSpecialtyDirectory(), patientArray);
 
             // Print all Hospital Data
-            printOutHospitalWorld(h1);
+            printOutHospitalWorld(userHospital);
 
         } catch (Exception e) {
             System.out.println("Opps, bad input...");
@@ -71,7 +76,7 @@ public class OscarHospitalWorld {
     static void refactoredpatientCheckIn(HashMap<String, List<Doctor>> directoryMap, Patient[] patientArray) {
         String department = "Internal Medicine";
         for (int i = 0; i < patientArray.length; i++) {
-            if (patientArray[i].getPatientSymptom() == "Skin Rash") {
+            if (patientArray[i].getPatientSymptom().equals("Skin Rash")) {
                 department = "Dermatology";
             } else if (patientArray[i].getPatientSymptom() == "Cold") {
                 department = "Pediatrics";
@@ -80,14 +85,39 @@ public class OscarHospitalWorld {
             } else if (patientArray[i].getPatientSymptom() == "Throat Pain") {
                 department = "Pediatrics";
             }
-            List<Doctor> docList = directoryMap.get(department);
-            Doctor doc = docList.get(getRandomNumber().nextInt(docList.size()));
-            doc.assignPatient(patientArray[i]);
+            if (directoryMap.get(department) != null) {
+                Doctor doc = directoryMap.get(department).get(getRandomNumber().nextInt(directoryMap.get(department).size()));
+                doc.assignPatient(patientArray[i]);
+            }
         }
     }
 
     static Random getRandomNumber() {
         Random rand = new Random();
         return rand;
+    }
+
+    static void populateData(Scanner scanner, Hospital hospital) {
+        System.out.println("How many doctors would you like to add?");
+        int quantity = scanner.nextInt();
+        scanner.nextLine();
+
+        int i = 0;
+        do {
+            populateDoctors(scanner, hospital);
+            i++;
+        } while (i < quantity);
+    }
+
+    static void populateDoctors(Scanner scanner, Hospital hospital) {
+        String[] specialties = {"Dermatology", "Pediatrics", "Orthopedics"};
+
+        Doctor inputDoctor = new Doctor();
+        System.out.println("Please enter Doctor name");
+        inputDoctor.setDoctorName(scanner.nextLine());
+        System.out.println("Please enter Doctor specialty 1-Dermatology 2-Pediatrics 3-Orthopedics");
+        inputDoctor.setDoctorSpecialty(scanner.nextInt(), specialties);
+        hospital.addDoctorToList(hospital, inputDoctor);
+        scanner.nextLine();
     }
 }

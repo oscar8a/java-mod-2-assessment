@@ -19,13 +19,10 @@ public class Hospital {
         return hospitalName;
     }
 
-    public List<Doctor> getDepartmentDoctorList(String department) {
-        System.out.println("getting doctors from " + department);
-
-        List<Doctor> deptDocList = this.specialtyDirectory.get(department);
-
+    public List<Doctor> getDepartmentDoctorList(Hospital hospital, String department) {
+        List<Doctor> deptDocList = hospital.getSpecialtyDirectory().get(department);
         if (deptDocList == null) {
-            this.specialtyDirectory.put(department, new ArrayList<Doctor>());
+            hospital.specialtyDirectory.put(department, new ArrayList<Doctor>());
             return this.specialtyDirectory.get(department);
         }
 
@@ -43,9 +40,8 @@ public class Hospital {
         return allDoctors;
     }
 
-    public void addDoctorToList(Doctor doctor) {
-        System.out.println("adding doctor " + doctor.doctorName + " who does " + doctor.doctorSpecialty);
-        List<Doctor> doctorList = getDepartmentDoctorList(doctor.doctorSpecialty);
+    public void addDoctorToList(Hospital hospital, Doctor doctor) {
+        List<Doctor> doctorList = getDepartmentDoctorList(hospital, doctor.doctorSpecialty);
         doctorList.add(doctor);
     }
 }

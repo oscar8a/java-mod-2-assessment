@@ -7,9 +7,7 @@ public class Doctor {
     
     List<Patient> patientList;
     
-    public Doctor(String nameInput, String specialtyInput) {
-        doctorName = nameInput;
-        doctorSpecialty = specialtyInput;
+    public Doctor() {
         patientList = new ArrayList<Patient>();
     }
 
@@ -21,12 +19,20 @@ public class Doctor {
         if (this.patientList.isEmpty()) System.out.println("           + Doctor has no patients");
         
         for (Patient patient : this.patientList) {
-            System.out.println("           + " + patient.getPatientName() + " " + patient.getPatientName() + " " + patient.getPatientSymptom());
+            System.out.println("           + " + patient.getPatientName() + " " + patient.getPatientAge() + " " + patient.getPatientSymptom());
         }
     }
 
     public String getDoctorName() {
         return doctorName;
+    }
+
+    public void setDoctorName(String doctorName) {
+        this.doctorName = doctorName;
+    }
+
+    public void setDoctorSpecialty(int specialtyInput, String[] specialties) {
+        this.doctorSpecialty = specialties[specialtyInput - 1];
     }
 
     public String getDoctorSpecialty() {
