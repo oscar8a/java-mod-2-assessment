@@ -21,9 +21,20 @@ public class Doctor {
         if (this.patientList.isEmpty()) System.out.println("           + Doctor has no patients");
         
         for (Patient patient : this.patientList) {
-            System.out.println("           + " + patient.patientName + " " + patient.patientAge + " " + patient.patientSymptom);
+            System.out.println("           + " + patient.getPatientName() + " " + patient.getPatientName() + " " + patient.getPatientSymptom());
         }
     }
 
+    public String getDoctorName() {
+        return doctorName;
+    }
+
+    public String getDoctorSpecialty() {
+        return doctorSpecialty;
+    }
+
+    public List<Patient> getPatientList() {
+        return patientList;
+    }
 
 }

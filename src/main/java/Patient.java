@@ -1,7 +1,7 @@
 public class Patient {
-    String patientName;
-    int patientAge;
-    String patientSymptom;
+    private String patientName;
+    private int patientAge;
+    private String patientSymptom;
     
     public Patient(String nameInput, int ageInput, String symptomInput) {
         patientName = nameInput;
@@ -9,5 +9,16 @@ public class Patient {
         patientSymptom = symptomInput;
     }
 
+    public String getPatientName() {
+        return patientName;
+    }
+
+    public int getPatientAge() {
+        return patientAge;
+    }
+
+    public String getPatientSymptom() {
+        return patientSymptom;
+    }
 
 }

@@ -3,20 +3,21 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Hospital {
-    String hospitalName;
-    HashMap<String, List<Doctor>> specialtyDirectory;
-    
+    private String hospitalName;
+    private HashMap<String, List<Doctor>> specialtyDirectory;
+
     public Hospital(String nameInput) {
         hospitalName = nameInput;
         specialtyDirectory = new HashMap<String, List<Doctor>>();
     }
 
-    // public void setSpecialtyDirectory(HashMap<String, List<Doctor>> specialtyDirectory) {
-    //     List<Doctor> emptyListOfDoctors = new ArrayList<Doctor>();
-    //     this.specialtyDirectory.put("Dermatology", emptyListOfDoctors);
-    //     this.specialtyDirectory.put("Pediatrics", emptyListOfDoctors);
-    //     this.specialtyDirectory.put("Orthopedics", emptyListOfDoctors);
-    // }
+    public HashMap<String, List<Doctor>> getSpecialtyDirectory() {
+        return specialtyDirectory;
+    }
+
+    public String getHospitalName() {
+        return hospitalName;
+    }
 
     public List<Doctor> getDepartmentDoctorList(String department) {
         System.out.println("getting doctors from " + department);
@@ -29,10 +30,6 @@ public class Hospital {
         }
 
         return deptDocList;
-    }
-
-    public HashMap<String, List<Doctor>> getSpecialtyDirectory() {
-        return specialtyDirectory;
     }
 
     public List<Doctor> getAllDoctorsList() {
@@ -51,6 +48,4 @@ public class Hospital {
         List<Doctor> doctorList = getDepartmentDoctorList(doctor.doctorSpecialty);
         doctorList.add(doctor);
     }
-
-    
 }
